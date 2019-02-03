@@ -1,0 +1,4 @@
+# Usage:   . load-bash-completion
+
+source <(minikube completion bash)
+source <(kubectl completion bash)
