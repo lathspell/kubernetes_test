@@ -5,18 +5,32 @@ Proxy
     A service that provides cross-cutting functions that many micro services
     need so that they themselves can stay slim. Examples are
     - Authentication (OAuth2)
-    - Authorization (ACLs, Policy Enforment)
+    - Authorization (ACLs, Policy Enforment, filter invalid requests)
     - Accounting
-    - Monitoring (number of requests and response times, telemetry/metrics, logging)
+    - Monitoring (telemetry/metrics, logging, tracing headers)
     - Dynamic Routing (Loadbalancing, A/B-Testing, Failover, URL-Rewriting)
 
 Service Mesh
     A design where all services are accessed through Proxies (data plane) which
     are configured by a central controller (control plane).
+    Authorization is usually not done using app specific username/passwords but
+    with "service identitites".
     
 
 Software
 ========
+
+Lists
+-----
+
+* https://jimmysong.io/awesome-cloud-native/
+* https://epsagon.com/blog/cncf-tools-overview-are-you-cloud-native/
+
+Meta-Orchestrierung
+-------------------
+
+Rancher
+    Management of multiple Kubernetes installations. 
 
 Infrastructure
 --------------
@@ -24,12 +38,45 @@ Infrastructure
 CoreDNS
     Kubernetes default internal DNS server
 
+etcd
+    Distributed key-value store
+
 Ingres Controller / Loadbalancers / Proxies / Service Mesh
 ----------------------------------------------------------
 
 nginx
     General purpose proxy server, good as HTTP server and HTTP reverse proxy.
     Can also talk to Istio Mixer.
+
+Eureka (Netflix)
+    Service registry and programmable load balancer (for AWS?)
+
+Kong
+    Reverse Proxy / API Gateway
+    - load balancing
+    - TLS
+    - authentication, OAuth2
+    - metrics
+    - logging
+    - health checks / circuit breakers
+
+Traefik
+    Reverse Proxy.
+    - load balancing
+    - Let's Encrypt automatically
+    - circuit breakers and automatic retry
+    - metrics
+    - access logs
+    - web UI
+    - kein OAuth2
+
+Caddy
+    Webserver und reverse proxy
+    - easy to setup
+    - automatic HTTPS with Let's Encrypt
+
+Keycloak Gatekeeper
+    Reverse Proxy für OAuth2
 
 Envoy
     Proxy server. Part of Istio.
@@ -40,8 +87,23 @@ Istio
     - Pilot does the configuration (control-plane)
     - Mixer helps to make policy decisions
 
+Consul
+    Service Mesh.
+    - service discovery
+    - automatic TLS certificates
+    - health checking
+    - dynamic routing
+
 linked
     Proxy server. Can also talk to Istio Mixer
+
+Zuul (Netflix)
+    Proxy server.
+    - dynamic routing
+    - monitoring
+    - reiliency
+    - security
+    - no automatic TLS?
 
 SPIFFE / Spire
     Secure Production Identity Framework for Everyone. Aims to help

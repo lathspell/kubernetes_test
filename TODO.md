@@ -1,6 +1,3 @@
-Overview
-* https://epsagon.com/blog/cncf-tools-overview-are-you-cloud-native/
-* https://jimmysong.io/awesome-cloud-native/
 
 Desktop Kubernetes
 * https://microk8s.io/
