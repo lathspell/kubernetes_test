@@ -28,7 +28,15 @@ Configurations:
   
   Secret                    Storage for secrets.
 
+Access Configuration:
+   
+  ServiceAccount            Definition of an account. Stores the access token in a Secret.
 
+  Role                      Role definition (e.g. "kube-system/admin") with specific access privileges
+  ClusterRole               Role for all namespaces of a cluster
+
+  RoleBinding               Binds a Service Account to a Role (e.g. "kube-system/cluster-admin")
+  ClusterRoleBinding        RoleBinding for all namespaces of a cluster
 
 Free-Tier GCP
 =============
@@ -75,8 +83,8 @@ gke-free-tier-default-pool-7240688e-65g8) on
 
     https://console.cloud.google.com/compute/instanceGroups/details/us-east1-d/gke-free-tier-default-pool-7240688e-grp?project=kubernetes-2019b-43758&edit=true&tab=members
 
-Kubernetes Playground
-=====================
+Minikube Kubernetes Playground
+==============================
 
 Preparation
 -----------
@@ -145,6 +153,17 @@ Proxy
     ...
     GET localhost:8001/api/v1/namespaces/default/pods/hello-server-6f5bdf948c-7ttsv/            - POD status
     GET localhost:8001/api/v1/namespaces/default/pods/hello-server-6f5bdf948c-7ttsv/proxy/      - HTTP without Loadbalancer
+
+Docker Images
+-------------
+
+Kubernetes does not know about any Docker daemons running locally on the desktop.
+Minikube can give the local docker CLI access to the Kubernetes docker daemon though.
+All images have to be rebuild (or otherwise pushed to this Docker instance).
+
+  eval $(minikube docker-env)
+  docker build …
+  kubectl run … --image-pull-policy=Never
 
 Tutorials
 ---------
