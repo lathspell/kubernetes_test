@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: database
+  labels:
+    project: spmia
+    app: database
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        project: spmia
+        app: database
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: database
+          image: postgres:10
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POSTGRES_USER
+              value: postgres_dev
+            - name: POSTGRES_PASSWORD
+              value: p0stgr@s_dev
+            - name: POSTGRES_DB
+              value: eagle_eye_dev
+          ports:
+            - name: postgres
+              containerPort: 5432

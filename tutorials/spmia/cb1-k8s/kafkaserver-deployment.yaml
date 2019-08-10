@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kafkaserver
+  labels:
+    project: spmia
+    app: kafkaserver
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        project: spmia
+        app: kafkaserver
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: kafkaserver
+          image: spotify/kafka:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: jvmFlags
+              value: "-Xmx100M"
+          ports:
+            - containerPort: 2181
+            - containerPort: 9092
+

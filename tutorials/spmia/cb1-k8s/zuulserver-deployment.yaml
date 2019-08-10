@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: zuulserver
+  labels:
+    project: spmia
+    app: zuulserver
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        project: spmia
+        app: zuulserver
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: zuulserver
+          image: johncarnell/tmx-zuulsvr:cb1
+          imagePullPolicy: Never
+          env:
+            - name: CONFIGSERVER_URI
+              value: http://configserver:8888
+            - name: EUREKASERVER_URI
+              value: http://eurekaserver:8761/eureka/
+            - name: PROFILE
+              value: default
+            - name: SERVER_PORT
+              value: "5555"
+          ports:
+            - containerPort: 5555
+

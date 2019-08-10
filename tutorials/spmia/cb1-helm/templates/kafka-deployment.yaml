@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-kafka
+  labels:
+    app: kafka
+    project: {{ .Chart.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+      project: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: kafka
+        project: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: kafka
+          image: spotify/kafka:latest
+          ports:
+            - containerPort: 2181
+            - containerPort: 9092
+          resources:
+            mem_limit: 1073741824

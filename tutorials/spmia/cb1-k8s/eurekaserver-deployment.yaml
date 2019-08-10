@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: eurekaserver
+  labels:
+    project: spmia
+    app: eurekaserver
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        project: spmia
+        app: eurekaserver
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: eurekaserver
+          image: johncarnell/tmx-eurekasvr:cb1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8761

@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: authenticationservice
+  labels:
+    project: spmia
+    app: authenticationservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        project: spmia
+        app: authenticationservice
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: authenticationservice
+          image: johncarnell/tmx-authentication-service:cb1
+          imagePullPolicy: Never
+          env:
+            - name: CONFIGSERVER_URI
+              value: http://configserver:8888
+            - name: ENCRYPT_KEY
+              value: IMSYMMETRIC
+            - name: EUREKASERVER_URI
+              value: http://eurekaserver:8761/eureka/
+            - name: PROFILE
+              value: dev
+            - name: SERVER_PORT
+              value: "8901"
+          ports:
+            - containerPort: 8901
+#          resources:
+#            requests:
+#              memory: 400Mi
+#            limits:
+#              memory: 1Gi

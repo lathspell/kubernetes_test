@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: configserver
+  labels:
+    project: spmia
+    app: configserver
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        project: spmia
+        app: configserver
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: configserver
+          image: johncarnell/tmx-confsvr:cb1
+          imagePullPolicy: Never
+          env:
+            - name: ENCRYPT_KEY
+              value: IMSYMMETRIC
+            - name: EUREKASERVER_URI
+              value: http://eurekaserver:8761/eureka/
+          ports:
+            - containerPort: 8888

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-database
+  labels:
+    app: database
+    project: {{ .Chart.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+      project: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: database
+        project: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: database
+          image: postgres:10
+          ports:
+            - containerPort: 5432
+

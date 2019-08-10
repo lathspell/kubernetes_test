@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: organizationservice
+  labels:
+    project: spmia
+    app: organizationservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        project: spmia
+        app: organizationservice
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: organizationservice
+          image: johncarnell/tmx-organization-service:cb1
+          imagePullPolicy: Never
+          env:
+            - name: AUTHSERVER_URI
+              value: http://authenticationservice:8901/user
+            - name: CONFIGSERVER_URI
+              value: http://configserver:8888
+            - name: ENCRYPT_KEY
+              value: IMSYMMETRIC
+            - name: EUREKASERVER_URI
+              value: http://eurekaserver:8761/eureka/
+            - name: KAFKASERVER_URI
+              value: kafkaserver
+            - name: PROFILE
+              value: dev
+            - name: SERVER_PORT
+              value: "8085"
+            - name: ZKSERVER_URI
+              value: kafkaserver
+          ports:
+            - containerPort: 8085
+
