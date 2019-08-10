@@ -4,7 +4,8 @@ Book: Spring Microservices in Action
 Authentication-Service - OAuth2 Login
 -------------------------------------
 
-    # http://minikube:30000/
+    # http://minikube:30000/ - with NodePort service
+    # http://spmia.minikube/auth/oauth/token - with Nginx Ingress controller
     http --auth=eagleeye:thisissecret --form POST http://localhost:8901/oauth/token grant_type=password scope=webclient username=john.carnell password=password1
     …
     {
@@ -19,6 +20,7 @@ Authentication-Service - OAuth2 Refresh
 ---------------------------------------
 
     # http://minikube:30000/
+    # http://spmia.minikube/auth/oauth/token - with Nginx Ingress controller
     http --auth=eagleeye:thisissecret --form POST http://localhost:8901/oauth/token grant_type=refresh_token scope=webclient refresh_token=00fc235c-6977-4e84-aa48-96888fee559d
     …
     {
@@ -60,6 +62,7 @@ Authentication-Service - User Information
 Organization Service
 --------------------
 
+    # http://spmia.minikube/org/v1/organizations/ - with Nginx Ingress controller
     http GET http://localhost:8085/v1/organizations/ Authorization:"Bearer $ACCESS_TOKEN"
     …
     [
@@ -84,6 +87,8 @@ Licensing Service
 
 Caveat: Unavailable in the first 30s or so due to Hystrix!
 
+    # http://minikube:30006/…
+    # http://spmia.minikube/lic/v1/organizations/442adb6e-fa58-47f3-9ca2-ed1fecdfe86c/licenses/ - with Nginx Ingress controller
     http GET http://localhost:8080/v1/organizations/442adb6e-fa58-47f3-9ca2-ed1fecdfe86c/licenses/ Authorization:"Bearer $ACCESS_TOKEN"
     …
     [
@@ -107,6 +112,7 @@ Configuration Service
 
 TODO: Where is the authentication?
 
+    # http://minikube:30007/…
     http GET http://localhost:8888/organizationservice/dev
     …
     {
@@ -137,6 +143,8 @@ TODO: Where is the authentication?
 Eureka Service
 --------------
 
+    # http://minikube:30003/
+    # http http://spmia.minikube/eureka/eureka/apps/ Authorization:"Bearer $ACCESS_TOKEN"
     http GET http://localhost:8761/eureka/apps/ Accept:application/json
     …
     {
@@ -164,6 +172,7 @@ Zuul Service
 
 API gateway that, among other things, the tmx-correlation-id header inserts.
 
+    # http://minikube:30008
     http GET http://localhost:5555/api/licensing/v1/organizations/442adb6e-fa58-47f3-9ca2-ed1fecdfe86c/licenses/  Authorization:"Bearer $ACCESS_TOKEN"
     …
     HTTP/1.1 200

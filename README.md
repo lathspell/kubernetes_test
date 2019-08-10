@@ -118,6 +118,8 @@ Status:
 	kubectl get svc                             # alias for "kubectl get services"
     kubectl get services	                    # shows external port like 8080:32065/TCP	
 	kubectl get events
+	kubectl get ingress                         # shows Ingress objects; not included in "get all" 
+	kubectl get service,ingress                 # shows both categories
 	kubectl config view
 	kubectl describe deployment hello-node
     kubectl describe pods

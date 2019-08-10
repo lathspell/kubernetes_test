@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-spmia
+  labels:
+    project: spmia
+    app: ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  rules:
+    - host: spmia.minikube
+      http:
+        paths:
+          - path: /auth
+            backend:
+              serviceName: authenticationservice
+              servicePort: 8901
+          - path: /org
+            backend:
+              serviceName: organizationservice
+              servicePort: 8085
+          - path: /echo
+            backend:
+              serviceName: echoserver
+              servicePort: 8080

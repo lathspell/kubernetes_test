@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  labels:
+    project: spmia
+    app: ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  backend:
+    serviceName: default-http-backend
+    servicePort: 80
+  rules:
+    - host: spmia.minikube
+      http:
+        paths:
+          - path: /auth(/|$)(.*)
+            backend:
+              serviceName: authenticationservice
+              servicePort: 8901
+          - path: /org(/|$)(.*)
+            backend:
+              serviceName: organizationservice
+              servicePort: 8085
+          - path: /lic(/|$)(.*)
+            backend:
+              serviceName: licensingservice
+              servicePort: 8080
+          - path: /eureka(/|$)(.*)
+            backend:
+              serviceName: eurekaserver
+              servicePort: 8761
+          - path: /echo(/|$)(.*)
+            backend:
+              serviceName: echoserver
+              servicePort: 8080

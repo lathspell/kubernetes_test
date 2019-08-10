@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: echoserver
+  labels:
+    run: echoserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: echoserver
+  template:
+    metadata:
+      labels:
+        run: echoserver
+    spec:
+      restartPolicy: Always
+      containers:
+        - image: gcr.io/google_containers/echoserver:1.4
+          imagePullPolicy: IfNotPresent
+          name: echoserver
+          ports:
+            - containerPort: 8080
