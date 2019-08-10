@@ -98,6 +98,7 @@ Create deployment
 
 Setup:
 
+    minikube config set memory 4096 # change memory from 2GB to 4GB
 	minikube start
 		minikube ip		# shows ip like 192.168.99.100
 		minikube dashboard
@@ -169,6 +170,11 @@ Tutorials
 ---------
 
 * https://kubernetes.io/docs/tutorials/hello-minikube/
+
+Tools
+=====
+
+* Komposer - Can convert Docker Compose docker-compose.yml to Kubernetes or Helm chars (although ugly ones)
 
 Links
 =====
