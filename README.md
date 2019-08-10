@@ -4,6 +4,11 @@ Concepts
 Glossary
 --------
 
+Concepts:
+    
+  Label                     Identifying key-value that is not directly part of the object syntax (e.g. projectname or version)
+  Annotation                Non-Identifying key-value that is not directly part of the object syntax (e.g. last modify timestamp)         
+
 Workloads:
 
   Ingres Controller         Kubern
@@ -83,42 +88,47 @@ gke-free-tier-default-pool-7240688e-65g8) on
 
     https://console.cloud.google.com/compute/instanceGroups/details/us-east1-d/gke-free-tier-default-pool-7240688e-grp?project=kubernetes-2019b-43758&edit=true&tab=members
 
-Minikube Kubernetes Playground
-==============================
+Kubernetes with Minikube
+========================
 
-Preparation
------------
+CLI
+---
 
-    source load-bash-completion
-   or
+Setup
+
     source <(kubectl completion bash)
-
-Create deployment
------------------
-
-Setup:
-
-    minikube config set memory 4096 # change memory from 2GB to 4GB
+    minikube config set memory 4096         # change memory from 2GB to 4GB
+    minikube config set cpu 4               # change cpus from 1 to 4
 	minikube start
-		minikube ip		# shows ip like 192.168.99.100
-		minikube dashboard
-		kubectl cluster-info
-		kubectl get nodes
+    eval $(minikube docker-env)             # Docker images should be build and stored in the Minikube Docker instance
+	
+Status:
+
+	minikube ip		# shows ip like 192.168.99.100
+	minikube dashboard
+	
+	kubectl version
+	kubectl cluster-info
+	kubectl get all --all-namespaces -o wide    # the big overview
+	kubectl get nodes
+	kubectl get deployments
+    kubectl get service -o wide
+    kubectl get replicasets -o wide
+	kubectl get pods
+	kubectl get svc                             # alias for "kubectl get services"
+    kubectl get services	                    # shows external port like 8080:32065/TCP	
+	kubectl get events
+	kubectl config view
+	kubectl describe deployment hello-node
+    kubectl describe pods
+    kubectl logs hello-server-6f5bdf948c-7ttsv            - Logs of this Pod 
+    kubectl exec -ti hello-server-6f5bdf948c-7ttsv bash   - Shell into this Pod
 
 Deploy:
 
 	kubectl create deployment hello-node --image=gcr.io/hello-minikube-zero-install/hello-node
-		kubectl get deployments
-        kubectl get service -o wide
-        kubectl get replicasets -o wide
-		kubectl get pods
-		kubectl get svc
-		kubectl get events
-		kubectl config view
-		kubectl describe deployment hello-node
 
 	kubectl expose deployment hello-node --type=LoadBalancer --port=8080 [--target-port=18080] [--external-ip=...]
-		kubectl get services	# shows external port like 8080:32065/TCP
 
 	curl http://192.168.99.100:32065/
 
@@ -131,29 +141,17 @@ Teardown:
 
 	minikube stop
 	minikube delete
-	
-View
-----
 
-  kubectl version
-  kubectl get all --all-namespaces          <-- the big overview
-  kubectl get nodes
-
-  kubectl get pods
-  kubectl describe pods
-  kubectl logs hello-server-6f5bdf948c-7ttsv            - Logs
-  kubectl exec -ti hello-server-6f5bdf948c-7ttsv bash   - Shell
-
-Proxy
------
+Kubectl Proxy
+-------------
 
   kubectl proxy                 - Open port 8001 to Kubernetes REST API 
 
     GET localhost:8001/logs/kube-apiserver.log
     GET localhost:8001/healthz/ping
     ...
-    GET localhost:8001/api/v1/namespaces/default/pods/hello-server-6f5bdf948c-7ttsv/            - POD status
-    GET localhost:8001/api/v1/namespaces/default/pods/hello-server-6f5bdf948c-7ttsv/proxy/      - HTTP without Loadbalancer
+    GET localhost:8001/api/v1/namespaces/default/pods/hello-server-6f5bdf948c-7ttsv/            - Pod status
+    GET localhost:8001/api/v1/namespaces/default/pods/hello-server-6f5bdf948c-7ttsv/proxy/      - HTTP to that Pod without Loadbalancer
 
 Docker Images
 -------------
@@ -171,11 +169,13 @@ Tutorials
 
 * https://kubernetes.io/docs/tutorials/hello-minikube/
 
-Tools
-=====
-
-* Komposer - Can convert Docker Compose docker-compose.yml to Kubernetes or Helm chars (although ugly ones)
-
 Links
 =====
+
+Tools
+-----
+* Komposer - Can convert Docker Compose docker-compose.yml to Kubernetes or Helm chars (although ugly ones)
+
+Provider
+--------
 * https://www.digitalocean.com/products/kubernetes/
