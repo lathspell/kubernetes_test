@@ -1,11 +1,10 @@
 Book: Spring Microservices in Action
 ====================================
 
-
-
 Authentication-Service - OAuth2 Login
 -------------------------------------
 
+    # http://minikube:30000/
     http --auth=eagleeye:thisissecret --form POST http://localhost:8901/oauth/token grant_type=password scope=webclient username=john.carnell password=password1
     …
     {
@@ -19,6 +18,7 @@ Authentication-Service - OAuth2 Login
 Authentication-Service - OAuth2 Refresh
 ---------------------------------------
 
+    # http://minikube:30000/
     http --auth=eagleeye:thisissecret --form POST http://localhost:8901/oauth/token grant_type=refresh_token scope=webclient refresh_token=00fc235c-6977-4e84-aa48-96888fee559d
     …
     {

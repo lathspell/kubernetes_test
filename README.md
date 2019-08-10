@@ -142,6 +142,33 @@ Teardown:
 	minikube stop
 	minikube delete
 
+Network Access
+--------------
+
+A Pod (i.e. a Docker container) can listen on as many ports as it wants, only the "exposed" are reachable by other
+containers. They are not reachable by other apps on the Host though. For that they have to declare a port forwarding
+(docker -p 8080:80).
+
+Kubernetes normally uses more than one host nodes though so the port must not only forwarded to localhost:1234 but to the
+external IP of that host node. This is done using a Service, e.g. one with type NodePort.
+
+Applications outside the Kubernetes Cluster still do not see this port as the whole cluster network is fenced off to
+the outside. Additionally the outsider would not know which Kubernetes host node currently has an instance of the service
+running. A Service of type LoadBalancer is needed here which takes care of forwarding to the port on the right node.
+Each service has a unique IP address inside the cluster and LoadBalancer services can additionally use a specific external
+IP to bind on.
+
+With Minikube which always only has one node there are several possibilities:
+1. Using a NodePort service and forward using a high port (30000-32767) on the Minikube IP. This port range is passed
+   through 1:1 to the host node.
+2. Use the "minikube tunnel" command. The real port (e.g. 8080) is then available on the IP listed in 
+   "kubectl get service" as "Cluster-IP". Every service has its own IP though! This command also enables
+   the use of the LoadBalancer service type. Its "External-IP" is the same as the internal one, though.
+3. Use "kubectl port-forward service/organizationservice 18080:8080" to forward localhost:18080 to port 8080 of
+   any Pod in that service. The port-forwarding is not a Kubernetes object but a CLI feature.
+4. Use Minikube "ingress" add-on and an Ingres service type. This will put an Nginx or similar proxy, running in
+   a Pod itself, between the outside world and the internally accessible cluster IPs. Only for HTTP traffic though.
+
 Kubectl Proxy
 -------------
 
