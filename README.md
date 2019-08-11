@@ -109,7 +109,7 @@ Status:
 	
 	kubectl version
 	kubectl cluster-info
-	kubectl get all --all-namespaces -o wide    # the big overview
+	kubectl get all --all-namespaces -o wide    # the big overview ("all" is not really all and no longer documented!)
 	kubectl get nodes
 	kubectl get deployments
     kubectl get service -o wide
@@ -125,6 +125,9 @@ Status:
     kubectl describe pods
     kubectl logs hello-server-6f5bdf948c-7ttsv            - Logs of this Pod 
     kubectl exec -ti hello-server-6f5bdf948c-7ttsv bash   - Shell into this Pod
+
+    # Show really everything in the current namespace
+    kubectl api-resources --namespaced=true -o name | paste -s -d, | xargs -I{} kubectl get {} --ignore-not-found --show-kind
 
 Deploy:
 

@@ -1,6 +1,25 @@
 Book: Spring Microservices in Action
 ====================================
 
+Setup
+-----
+    
+    $ echo "192.168.99.100  minikube" >> /dev/hosts
+    $ echo "192.168.99.100  spmia.minikube" >> /dev/hosts
+    $ minikube start
+    $ minikube addons enable ingress
+    $ eval $(minikube docker-env)
+    $ cd /home/cb/workspace/Spring Microservices In Action/spmia-chapter10-lathspell
+    $ mvn docker:build
+    $ cd /home/cb/workspace/kubernetes_test/tutorials/spmia/k8s
+    $ BUILD_NAME=cb1 make
+    
+TODO
+----
+
+* Forwarding the Postgres TCP Port 5432 using Nginx Ingress does not yet work even though it is configured
+  according to https://kubernetes.github.io/ingress-nginx/user-guide/exposing-tcp-udp-services/ 
+
 Authentication-Service - OAuth2 Login
 -------------------------------------
 
