@@ -1,7 +1,7 @@
 Glossary
 ========
 
-Proxy
+Proxy (generic)
     A service that provides cross-cutting functions that many micro services
     need so that they themselves can stay slim. Examples are
     - Authentication (OAuth2)
@@ -10,11 +10,19 @@ Proxy
     - Monitoring (telemetry/metrics, logging, tracing headers)
     - Dynamic Routing (Loadbalancing, A/B-Testing, Failover, URL-Rewriting)
 
+API-Gateway
+    Proxies running between the Ingress and the Services ("north-south").
+    Usually for HTTPS termination and Authentication.
+    Exposes API URLs to the outside.
+
 Service Mesh
+    Little proxies running as Sidecards and mainly for inter-service communication ("east-west").
     A design where all services are accessed through Proxies (data plane) which
     are configured by a central controller (control plane).
+    Each services usually has a little proxy as Sidecar running so no "central" single-point-of-failure proxy!
     Authorization is usually not done using app specific username/passwords but
     with "service identitites".
+    
     
 
 Software
@@ -41,7 +49,7 @@ CoreDNS
 etcd
     Distributed key-value store
 
-Ingres Controller / Loadbalancers / Proxies / Service Mesh
+Ingres Controller / Loadbalancers / API-Gateways / Service-Proxies / Service Mesh
 ----------------------------------------------------------
 
 nginx

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tmp
+spec:
+  containers:
+  - name: b1
+    image: busybox
+    args:
+    - /bin/sh
+    - -c
+    - echo hello; sleep 3600
+  - name: b2
+    image: busybox
+    args:
+    - /bin/sh
+    - -c
+    - echo hello; sleep 3600

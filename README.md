@@ -120,25 +120,40 @@ Status:
 	kubectl get events
 	kubectl get ingress                         # shows Ingress objects; not included in "get all" 
 	kubectl get service,ingress                 # shows both categories
+	kubectl get pod foo -o yaml --export        # shows Yaml without Container specific details
+	kubectl get pod -l app=foo                  # selects Pod not by name but by Label
 	kubectl config view
 	kubectl describe deployment hello-node
-    kubectl describe pods
-    kubectl logs hello-server-6f5bdf948c-7ttsv            - Logs of this Pod 
-    kubectl exec -ti hello-server-6f5bdf948c-7ttsv bash   - Shell into this Pod
+    kubectl describe pods                                   # human readable information
+    kubectl logs hello-server-6f5bdf948c-7ttsv              # Logs of this Pod 
+    kubectl logs tmp -c b2                                  # Logs from Pod "tmp" Container "b2" (for multi-container Pods)
+    kubectl exec -ti hello-server-6f5bdf948c-7ttsv bash     # Shell into this Pod
 
     # Show really everything in the current namespace
     kubectl api-resources --namespaced=true -o name | paste -s -d, | xargs -I{} kubectl get {} --ignore-not-found --show-kind
 
 Deploy:
 
-	kubectl create deployment hello-node --image=gcr.io/hello-minikube-zero-install/hello-node
+    # declarative
+    kubectl apply -f foo.yaml
 
+    # imperative
+	kubectl create deployment hello-node --image=gcr.io/hello-minikube-zero-install/hello-node
 	kubectl expose deployment hello-node --type=LoadBalancer --port=8080 [--target-port=18080] [--external-ip=...]
 
 	curl http://192.168.99.100:32065/
 
     kubectl autoscale deployment hello-node --min=2 --max=10
-
+    
+    # Run a single command in a Pod (--restart=Never creates a Pod without a Deployment; --rm deletes if afterwards) 
+    kubectl run tmp1 -it --rm --image=busybox --restart=Never --command -- env
+    # Run a single command to access another Container on its internal IP
+     ubectl run tmp7 -it --rm --restart=Never --image=busybox --command -- wget -qO-  http://172.17.0.18/
+    # Generates Yaml for an action without executing it
+    kubectl create namespace mynamespace --dry-run -o yaml
+    # Updates image for container with name "nginx" in Pod with name "nginx3"
+    kubectl set image pod/nginx3 nginx=nginx:1.8.1
+    
 Teardown:
 
 	kubectl delete service hello-node

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: env
+  namespace: mynamespace
+spec:
+  restartPolicy: Never
+  containers:
+    - name: env
+      image: busybox
+      command:
+        - env
