@@ -109,6 +109,8 @@ Status:
 	
 	kubectl version
 	kubectl cluster-info
+	kubectl api-resources / api-versions        # Shows all API objects and their current versions
+	kubectl explain pod.spec                    # Shows the reference manual for the object "Pod" (or others)
 	kubectl get all --all-namespaces -o wide    # the big overview ("all" is not really all and no longer documented!)
 	kubectl get nodes
 	kubectl get deployments
@@ -122,6 +124,8 @@ Status:
 	kubectl get service,ingress                 # shows both categories
 	kubectl get pod foo -o yaml --export        # shows Yaml without Container specific details
 	kubectl get pod -l app=foo                  # selects Pod not by name but by Label
+	kubectl get pod -L project,app              # shows only the Labels "project" and "app"
+	kubectl get pod -l 'app in (foo,bar)'       # selects Pods with label "app" being either "foo" or "bar"
 	kubectl config view
 	kubectl describe deployment hello-node
     kubectl describe pods                                   # human readable information
@@ -129,8 +133,13 @@ Status:
     kubectl logs tmp -c b2                                  # Logs from Pod "tmp" Container "b2" (for multi-container Pods)
     kubectl exec -ti hello-server-6f5bdf948c-7ttsv bash     # Shell into this Pod
 
+    # Show information using custom template
+    kubectl get pod nginx1 -o jsonpath --template='{.metadata.name},{.metadata.annotations.description}{"\n"}'
+
     # Show really everything in the current namespace
     kubectl api-resources --namespaced=true -o name | paste -s -d, | xargs -I{} kubectl get {} --ignore-not-found --show-kind
+
+    kubectl rollout status deployment nginx     # shows rollout status
 
 Deploy:
 
@@ -151,8 +160,20 @@ Deploy:
      ubectl run tmp7 -it --rm --restart=Never --image=busybox --command -- wget -qO-  http://172.17.0.18/
     # Generates Yaml for an action without executing it
     kubectl create namespace mynamespace --dry-run -o yaml
-    # Updates image for container with name "nginx" in Pod with name "nginx3"
-    kubectl set image pod/nginx3 nginx=nginx:1.8.1
+    # Updates image for container with name "nginx" in Pod or Deployment with name "nginx3"
+    kubectl set image pod/nginx3       nginx=nginx:1.8.1
+    kubectl set image deployment/nginx nginx=nginx:1.7.9
+    # Edit object using JQ and reapply
+    kubectl get pod nginx2 -o json | jq '.metadata.labels.app = "v2"' | kubectl apply -f -
+    # Edit and remove labels
+    kubectl label pods nginx2 app=v3 --overwrite
+    kubectl label pods nginx2 app-
+    # Add or remote annotation metadata from objects
+    kubectl annotate pod nginx1 nginx2 nginx3 description="my descr" --overwrite
+    kubectl annotate pod nginx{1..3} description-
+    # Show revision history and undo last rollout (e.g. after changing the image version)
+    kubectl rollout history deployment nginx
+    kubectl rollout undo deployment/nginx
     
 Teardown:
 
