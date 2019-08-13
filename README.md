@@ -51,6 +51,7 @@ view
 	
 	kubectl version
 	kubectl cluster-info
+	kubectl config get-contexts …               # Shows and configures Contexts and Clusters (-> kubectx)	
 	kubectl api-resources / api-versions        # Shows all API objects and their current versions
 	kubectl explain pod.spec                    # Shows the reference manual for the object "Pod" (or others)
 	kubectl get all --all-namespaces -o wide    # the big overview ("all" is not really all and no longer documented!)
@@ -117,6 +118,8 @@ edit
     # Show revision history and undo last rollout (e.g. after changing the image version)
     kubectl rollout history deployment nginx
     kubectl rollout undo deployment/nginx
+    # Delete all Deployments
+    kubectl delete deployment --all
 
 Free-Tier GCP
 =============
@@ -250,6 +253,12 @@ Links
 Tools
 -----
 * Komposer - Can convert Docker Compose docker-compose.yml to Kubernetes or Helm chars (although ugly ones)
+* kube-ps1 - shows context and namespace in prompt (https://github.com/jonmosco/kube-ps1)
+* kubectx / kubens - fast switching between contexts and namespaces (https://github.com/ahmetb/kubectx)
+* kubespy - watch resource changes in realtime (https://github.com/pulumi/kubespy)
+* squash - attach debugger (gdb, Go/Java/Python) to any process running in a Pod
+* kubed-sh - runs scripts inside a pod and hot-reloads them after changes (https://kubed.sh/)
+* stern - logfile watching in "tail -f" style for multiple Pods (https://github.com/wercker/stern)
 
 Provider
 --------
