@@ -121,6 +121,12 @@ edit
     # Delete all Deployments
     kubectl delete deployment --all
 
+configuration
+-------------
+* environment variables can be specified as literals
+* environment variables can be taken from configmaps as individual values (env/valueFrom/configMapKeyRef)
+* environment variables can be loaded as bulk from a file (envFrom/configMapRef)
+
 Free-Tier GCP
 =============
 

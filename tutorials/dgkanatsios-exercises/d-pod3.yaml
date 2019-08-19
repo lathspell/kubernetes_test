@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  volumes:
+  - name: myvolume
+    configMap:
+      name: cmvolume
+  containers:
+  - image: nginx
+    name: nginx
+    volumeMounts:
+      - name: myvolume
+        mountPath: /etc/lala

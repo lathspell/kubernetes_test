@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  config.txt: |
+    foo3=lili
+    foo4=lele
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: config
+  selfLink: /api/v1/namespaces/default/configmaps/config
