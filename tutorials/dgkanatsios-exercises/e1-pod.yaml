@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: e1
+spec:
+  containers:
+  - image: nginx
+    name: e1
+    livenessProbe:
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      exec:
+        command: [ ls ]
+    readinessProbe:
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      httpGet:
+        port: 80
+        path: /
+  restartPolicy: Never

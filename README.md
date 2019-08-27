@@ -120,6 +120,8 @@ edit
     kubectl rollout undo deployment/nginx
     # Delete all Deployments
     kubectl delete deployment --all
+    # Immediately delete a pod
+    kubectl delete pod --force --grace-period=0 foo
 
 configuration
 -------------
