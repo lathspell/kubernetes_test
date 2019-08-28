@@ -51,9 +51,9 @@ view
 	
 	kubectl version
 	kubectl cluster-info
-	kubectl config get-contexts …               # Shows and configures Contexts and Clusters (-> kubectx)	
-	kubectl api-resources / api-versions        # Shows all API objects and their current versions
-	kubectl explain pod.spec                    # Shows the reference manual for the object "Pod" (or others)
+	kubectl config get-contexts …               # shows and configures Contexts and Clusters (-> kubectx)	
+	kubectl api-resources / api-versions        # shows all API objects and their current versions
+	kubectl explain pod.spec                    # shows the reference manual for the object "Pod" (or others)
 	kubectl get all --all-namespaces -o wide    # the big overview ("all" is not really all and no longer documented!)
 	kubectl get nodes
 	kubectl get deployments
@@ -62,9 +62,11 @@ view
 	kubectl get pods
 	kubectl get svc                             # alias for "kubectl get services"
     kubectl get services	                    # shows external port like 8080:32065/TCP	
+    kubectl get endpoints                       # shows endpoint ip addressses; managed by services
 	kubectl get events
 	kubectl get ingress                         # shows Ingress objects; not included in "get all" 
 	kubectl get service,ingress                 # shows both categories
+	kubectl get networkpolices                  # shows network policies that limit access to Pods by e.g. labels
 	kubectl get pod foo -o yaml --export        # shows Yaml without Container specific details
 	kubectl get pod -l app=foo                  # selects Pod not by name but by Label
 	kubectl get pod -L project,app              # shows only the Labels "project" and "app"
@@ -220,11 +222,19 @@ IP to bind on.
 With Minikube which always only has one node there are several possibilities:
 1. Using a NodePort service and forward using a high port (30000-32767) on the Minikube IP. This port range is passed
    through 1:1 to the host node.
+   
+         $ kubectl get services
+         NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                         AGE
+         f1b                     NodePort    10.104.40.33     <none>        80:32533/TCP                    16m
+         $ http $(minikube ip):32533
+         
 2. Use the "minikube tunnel" command. The real port (e.g. 8080) is then available on the IP listed in 
    "kubectl get service" as "Cluster-IP". Every service has its own IP though! This command also enables
    the use of the LoadBalancer service type. Its "External-IP" is the same as the internal one, though.
+   
 3. Use "kubectl port-forward service/organizationservice 18080:8080" to forward localhost:18080 to port 8080 of
    any Pod in that service. The port-forwarding is not a Kubernetes object but a CLI feature.
+
 4. Use Minikube "ingress" add-on and an Ingres service type. This will put an Nginx or similar proxy, running in
    a Pod itself, between the outside world and the internally accessible cluster IPs. Only for HTTP traffic though.
 
