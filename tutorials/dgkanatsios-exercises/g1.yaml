@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  name: g1
+spec:
+  containers:
+  - args:
+    - /bin/sh
+    - -c
+    - sleep 3600
+    image: busybox
+    name: g1a
+    volumeMounts:
+    - name: emptyfoo
+      mountPath: /etc/foo
+  - args:
+    - /bin/sh
+    - -c
+    - sleep 3600
+    image: busybox
+    name: g1b
+    volumeMounts:
+    - name: emptyfoo
+      mountPath: /etc/foo
+  restartPolicy: Never
+  volumes:
+    - name: emptyfoo
+      emptyDir: {}

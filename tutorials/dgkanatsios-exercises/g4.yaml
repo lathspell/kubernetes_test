@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: g4
+spec:
+  restartPolicy: Never
+  containers:
+  - args:
+    - /bin/sh
+    - -c
+    - sleep 3600
+    image: busybox
+    name: g4
+    volumeMounts:
+    - name: mypvcvol
+      mountPath: /etc/foo
+  volumes:
+  - name: mypvcvol
+    persistentVolumeClaim:
+      claimName: mypvc
