@@ -80,6 +80,8 @@ view
 
     # Show information using custom template
     kubectl get pod nginx1 -o jsonpath --template='{.metadata.name},{.metadata.annotations.description}{"\n"}'
+    # Show information (node names for alle running pods) using JSON-Template with "\n" as separator
+    kubectl get pods -o go-template='{range .items[*]}{.spec.nodeName}{"\n"}{end}'
 
     # Show really everything in the current namespace
     kubectl api-resources --namespaced=true -o name | paste -s -d, | xargs -I{} kubectl get {} --ignore-not-found --show-kind
