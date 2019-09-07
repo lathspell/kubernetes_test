@@ -264,6 +264,7 @@ Tutorials
 ---------
 
 * https://kubernetes.io/docs/tutorials/hello-minikube/
+* https://www.katacoda.com/courses/istio/deploy-istio-on-kubernetes
 
 Links
 =====
