@@ -106,7 +106,7 @@ Consul
     - health checking
     - dynamic routing
 
-linked
+linkerd
 * Proxy server. Can also talk to Istio Mixer
 
 Zuul (Netflix)
