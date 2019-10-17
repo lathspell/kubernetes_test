@@ -88,6 +88,9 @@ view
 
     kubectl rollout status deployment nginx     # shows rollout status
 
+    # Sort output
+    kubectl get jobs --sort-by=.metadata.creationTimestamp
+
 edit
 ----
 
