@@ -100,6 +100,7 @@ edit
     # imperative
 	kubectl create deployment hello-node --image=gcr.io/hello-minikube-zero-install/hello-node
 	kubectl expose deployment hello-node --type=LoadBalancer --port=8080 [--target-port=18080] [--external-ip=...]
+    kubectl create job --from=cronjob/foo foo-manual-001
 
 	curl http://192.168.99.100:32065/
 
