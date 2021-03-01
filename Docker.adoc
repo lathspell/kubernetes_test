@@ -1,0 +1,54 @@
+:toc:
+
+= Docker
+
+== Usage
+
+=== Running
+
+    docker run -e "SPRING_PROFILES_ACTIVE=dev" -p 8080:8080 -t springio/gs-spring-boot-docker
+
+        --name      container name
+        -e          environment variable
+        -p          port forwarding    
+        -t          target image
+        -d -i -t    detached interactive tty (allocate pseudo tty)
+
+    docker ps
+        CONTAINER ID        IMAGE     COMMAND                  CREATED        STATUS         PORTS                    NAMES
+        dd81810c6f80        foo/bar   "java -cp app:app/li…"   2 minutes ago  Up 2 minutes   0.0.0.0:8080->8080/tcp   competent_lamport
+
+        -a    all containers, including stopped ones
+        -s    display size
+
+    docker start
+    docker stop
+    docker restart
+    docker kill
+
+=== Debug
+
+    docker logs <ID>
+    docker attach <ID>
+        # Exit with ctrl-p + ctrl-q as ctrl-c/ctrl-d is proxied to the container and might terminate it
+
+=== Maintenance
+
+    docker volume ls
+    docker volume rm
+    docker volume prune
+
+    docker images
+        REPOSITORY                       TAG                 IMAGE ID            CREATED             SIZE
+        springio/gs-spring-boot-docker   latest              2202c5eee002        37 minutes ago      119MB
+        openjdk                          8-jdk-alpine        04060a9dfc39        8 days ago          103MB
+
+    docker rmi 04060a9dfc39       
+        # Remove image
+
+== Examples
+
+    docker build -t lathspell:maven-3-jdk8  maven-3-jdk8/
+    docker run lathspell:maven-3-jdk8  mvn -v
+
+    docker run -d -p 3000 node-welcome-app        # Start app listening on port 3000 in background

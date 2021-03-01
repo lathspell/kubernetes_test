@@ -1,0 +1,61 @@
+:toc:
+
+= Kubernetes
+
+== Glossary
+
+Concepts:
+
+    Label                     Identifying key-value that is not directly part of the object syntax (e.g. projectname or version)
+    Annotation                Non-Identifying key-value that is not directly part of the object syntax (e.g. last modify timestamp)         
+
+Workloads:
+
+    Ingres Controller         Kubern
+
+    Pod                       Kubernetes unit, usually a Container with Volumes and Sidecars
+      Container               Based on e.g. a Docker image; usually only one per pod
+      Volume                  Some kind of storage
+      Sidecar                 HTTP-Proxy or similar
+
+Configurations:
+
+    Service                   Definition of an externally accessible port and load balancing.
+
+    Deployment                Definition of a Replica Set and Pod
+
+    Replica Set               Defines how many instances have to exist
+
+    Daemon Set                Defines that all nodes should run a specific Pod.
+                              Used for infrastructure Pods like glusterd, logstash or collectd.
+
+    Config Map                Defines where other configurations can get config values from.
+
+    Secret                    Storage for secrets.
+
+Access Configuration:
+
+    ServiceAccount            Definition of an account. Stores the access token in a Secret.
+
+    Role                      Role definition (e.g. "kube-system/admin") with specific access privileges
+    ClusterRole               Role for all namespaces of a cluster
+
+    RoleBinding               Binds a Service Account to a Role (e.g. "kube-system/cluster-admin")
+    ClusterRoleBinding        RoleBinding for all namespaces of a cluster
+
+=== Tutorials
+
+* https://kubernetes.io/docs/tutorials/hello-minikube/
+* https://www.katacoda.com/courses/istio/deploy-istio-on-kubernetes
+
+== Links
+
+=== Tools
+
+* Komposer - Can convert Docker Compose docker-compose.yml to Kubernetes or Helm chars (although ugly ones)
+* kube-ps1 - shows context and namespace in prompt (https://github.com/jonmosco/kube-ps1)
+* kubectx / kubens - fast switching between contexts and namespaces (https://github.com/ahmetb/kubectx)
+* kubespy - watch resource changes in realtime (https://github.com/pulumi/kubespy)
+* squash - attach debugger (gdb, Go/Java/Python) to any process running in a Pod
+* kubed-sh - runs scripts inside a pod and hot-reloads them after changes (https://kubed.sh/)
+* stern - logfile watching in "tail -f" style for multiple Pods (https://github.com/wercker/stern)

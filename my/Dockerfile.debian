@@ -1,0 +1,8 @@
+FROM debian:stable
+
+MAINTAINER cb@lathspell.de
+
+RUN apt-get update
+RUN apt-get install -y httpie curl wget traceroute iputils-ping mtr-tiny ngrep nmap
+
+ENTRYPOINT /bin/bash

@@ -1,0 +1,37 @@
+= Certified Kubernetes Application Developer =
+
+== Exam ==
+
+* https://www.cncf.io/certification/ckad/
+
+== Books ==
+
+* https://matthewpalmer.net/kubernetes-app-developer/
+* https://www.amazon.de/Certified-Kubernetes-Application-Developer-Depth/dp/1492083739/
+
+== Community ==
+
+* https://kubernauts-slack-join.herokuapp.com/ - Kubernauts
+
+== Exercises ==
+
+* https://github.com/dgkanatsios/CKAD-exercises
+
+== Practice Environments ==
+
+* minikube (local cluster)
+* https://github.com/kubernetes-sigs/kind (local cluster)
+* https://labs.play-with-k8s.com/
+* https://www.katacoda.com/courses/kubernetes/playground (Paid)
+
+
+== tmux ==
+
+ctrl-b followed by:
+
+* Split screen horizontally: "
+* Select screen: Arrow-Keys
+* Toggle layouts: space
+* Swap panes: { and }
+* Detach the session: d
+* List/Select windows: w (left right arrows to select panes)
