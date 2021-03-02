@@ -29,9 +29,10 @@
 	kubectl get service,ingress                 # shows both categories
 	kubectl get networkpolices                  # shows network policies that limit access to Pods by e.g. labels
 	kubectl get pod foo -o yaml --export        # shows Yaml without Container specific details
-	kubectl get pod -l app=foo                  # selects Pod not by name but by Label
 	kubectl get pod -L project,app              # shows only the Labels "project" and "app"
+	kubectl get pod -l app=foo                  # selects Pod not by name but by Label
 	kubectl get pod -l 'app in (foo,bar)'       # selects Pods with label "app" being either "foo" or "bar"
+                                                # Also accepts "notin" and "," for AND. There is no OR nor NOT.
 
     kubectl logs hello-server-6f5bdf948c-7ttsv              # Logs of this Pod
     kubectl logs tmp -c b2                                  # Logs from Pod "tmp" Container "b2" (for multi-container Pods)
@@ -82,7 +83,7 @@
     kubectl annotate pod nginx{1..3} description-
     # Show revision history and undo last rollout (e.g. after changing the image version)
     kubectl rollout history deployment nginx
-    kubectl rollout undo deployment/nginx
+    kubectl rollout undo deployment nginx --to-revision=3
     # Delete all Deployments
     kubectl delete deployment --all
     # Immediately delete a pod
