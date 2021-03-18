@@ -59,3 +59,4 @@ Access Configuration:
 * squash - attach debugger (gdb, Go/Java/Python) to any process running in a Pod
 * kubed-sh - runs scripts inside a pod and hot-reloads them after changes (https://kubed.sh/)
 * stern - logfile watching in "tail -f" style for multiple Pods (https://github.com/wercker/stern)
+* telepresence - deploys a proxy pod that connects to a local Docker container which then behaves as if it were already deployed (https://www.telepresence.io/)
