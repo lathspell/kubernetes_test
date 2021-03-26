@@ -40,9 +40,12 @@
 
     # Show information using custom template
     kubectl get pod nginx1 -o jsonpath --template='{.metadata.name},{.metadata.annotations.description}{"\n"}'
+    kubectl get pods -o jsonpath --template="{range .items[*]}{.metadata.namespace}{'/'}{.metadata.name}{'\n'}{end}" 
     kubectl get pods -o jsonpath='{.items[*].spec.containers[*].image}'
+
     # Show information (node names for alle running pods) using JSON-Template with "\n" as separator
     kubectl get pods -o go-template='{range .items[*]}{.spec.nodeName}{"\n"}{end}'
+
     # Sort output
     kubectl get jobs --sort-by=.metadata.creationTimestamp
 
