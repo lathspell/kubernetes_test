@@ -134,6 +134,15 @@ The k3d variant runs the master node and all worker nodes as Docker containers.
 Worker nodes are called "agents". Can be used with plain kubectl after creation.
 
     brew install k3d                        - Installation on MacOS
+
     k3d cluster create ckad --agents=3      - Create cluster with 3 worker nodes
+      --k3s-server-arg '--kubelet-arg=eviction-hard=imagefs.available<1%,nodefs.available<1%'
+      --k3s-server-arg '--kubelet-arg=eviction-minimum-reclaim=imagefs.available=1%,nodefs.available=1%' 
+
+      # ggf: --k3s-server-arg '--no-deploy=traefik' -p '8081:80@loadbalancer'
+
     k3d kubeconfig write ckad               - Prints context configuration as YAML
+    mv ~/.k3d/kubeconfig-ckad.yaml  ~/.kube/conf.d/ckad.yaml
+    ktx k3d-ckad
+
     k3d image import -c ckad myimage:1.0.0  - Import from local Docker daemon into k3d-ckad cluster
